@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+import '../Custom/custom_painter.dart';
 import '../previewscreen/preview_screen.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -81,36 +82,45 @@ class _CameraScreenState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Click To Share',
-          textAlign: TextAlign.center,
-        ),
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: Container(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+      body: SafeArea(
+        child: Stack(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
               Expanded(
-                flex: 1,
                 child: _cameraPreviewWidget(),
               ),
-              const SizedBox(height: 10.0),
+            ],
+          ),
+          const Center(
+            child: Text(
+              'chụp số seal nằm ở chiều này',
+              textDirection: TextDirection.ltr,
+            ),
+          ),
+          Center(
+            child: CustomPaint(
+              child: Container(),
+              painter: FaceOutlinePainter(),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   _cameraTogglesRowWidget(),
                   _captureControlRowWidget(context),
                   const Spacer()
                 ],
               ),
-              const SizedBox(height: 20.0)
+              const SizedBox(
+                height: 10,
+              )
             ],
           ),
-        ),
+        ]),
       ),
     );
   }
